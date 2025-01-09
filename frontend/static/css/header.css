@@ -1,0 +1,115 @@
+.headerNavBar {
+  background-color: var(--liquid-lava);
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--16px);
+  padding: var(--8px) var(--24px);
+  border-radius: var(--24px);
+}
+
+.iconMenu {
+  height: 2.656vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.icon {
+  width: var(--36px);
+  height: var(--36px);
+}
+
+.navLabel {
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 0.5s ease, max-height 0.5s ease;
+  font-size: 0.625vw;
+  font-weight: 700;
+  max-height: 0;
+  color: var(--snow);
+}
+
+.navLabel.active {
+  opacity: 1;
+  max-height: 1.5vw;
+}
+
+.logout {
+  display: flex;
+  position: absolute;
+  right: var(--24px);
+  top: 2vw;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.logout-icon {
+  width: var(--32px);
+  height: var(--32px);
+  transition: transform 0.3s ease;
+}
+
+.logout-text {
+  font-family: "Inter", sans-serif;
+  font-size: var(--12px);
+  font-weight: 600;
+  color: var(--liquid-lava);
+  margin-top: 0.25rem;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+
+.logout:hover {
+  transform: translateY(-2px);
+}
+
+.logout:hover .logout-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media screen and (max-width: 768px) {
+  .logout {
+    right: 1rem;
+    top: 0.75rem;
+  }
+
+  .logout-icon {
+    width: var(--24px);
+    height: var(--24px);
+  }
+}
+
+.language-selector {
+  display: flex;
+  position: absolute;
+  right: 7.813vw;
+  top: 2vw;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+.language-flags {
+  display: flex;
+  gap: 10px;
+}
+
+.language-flag {
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+}
+
+.language-flag:hover {
+  opacity: 0.8;
+}

@@ -1,0 +1,76 @@
+services:
+  database:
+    restart: always
+    container_name: database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - transcendence-network
+    env_file:
+      - .env
+
+  redis:  
+    image: redis:latest
+    container_name: redis
+    restart: always
+    networks:
+      - transcendence-network
+    volumes:
+      - redis_data:/data  
+  backend:
+    restart: always
+    container_name: backend
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    volumes:
+      - ./backend:/app
+      - ./backend/certs:/app/certs
+      - ./backend/templates:/app/templates
+      - ./frontend/templates:/app/frontend/templates
+      - media:/app/media
+    expose:
+      - "8443"
+    depends_on:
+      - database
+      - redis
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    env_file:
+      - .env
+    networks:
+      - transcendence-network
+
+  frontend:
+    restart: always
+    container_name: frontend
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    depends_on:
+      - backend
+    env_file:
+      - .env
+    networks:
+      - transcendence-network
+    ports:
+      - "4430:443"
+    volumes:
+      - media:/app/media
+
+volumes:
+  postgres_data:
+    name: postgre_data
+  media:
+    name: media_volume
+  redis_data: 
+    name: redis_data
+
+networks:
+  transcendence-network:
+    name: transcendence-network
+    driver: bridge
